@@ -1,0 +1,36 @@
+use onlineshoppingportal
+
+ db.Customer
+
+ db.Address
+
+ db.Orders
+
+ db.Vendors
+
+ db.Products
+
+
+db.Customer.insertMany([
+{ customername:"Ramesh",customeremail:"Ramesh123@gmail.com",customermobno:"9856789654",customerwallet:"5000"},{ customername:"Rakesh",customeremail:"Rakesh23@gmail.com",customermobno:"9866789654",customerwallet:"8000"},{customername:"Rajesh",customeremail:"Rajesh3@gmail.com",customermobno:"9886789654",customerwallet:"9000"}])
+
+db.Address.insertMany([
+{customercity:"Delhi",customerpincode:"600012",customeraddress:"India gate"},{customercity:"Bangalore",customerpincode:"165544",customeraddress:"Whitefield"},{customercity:"Jalandhar",customerpincode:"144001",customeraddress:"Model Town"}])
+
+db.Orders.insertMany([
+{orderstatus:"Delivered",orderamount:"500"},{orderstatus:"pending",orderamount:"1600"},{orderstatus:"Out for Delivery",orderamount:"3200"}])
+
+db.Vendors.insertMany([
+{vendorname:"Retailnet", vendoremail:"Retailnet@gmail.com",vendormobno:"9875698562",vendorwallet:"5000000"},{vendorname:"Hypercloud", vendoremail:"Hypercloud@gmail.com",vendormobno:"98756963312",vendorwallet:"7000000"}])
+
+db.Products.insertMany([
+{productname:"Nike Shoes",productcategory:"shoes",productprice:"3200"},{productname:"Puma Shoes",productcategory:"shoes",productprice:"2500"}])
+
+
+db.Address.find({customercity:"Delhi"})
+
+db.Products.find({productname:"Nike Shoes"},{productprice:"3200"})
+
+db.Orders.find({orderstatus:"pending"})
+
+db.Address.find({customerpincode:"600012"})
