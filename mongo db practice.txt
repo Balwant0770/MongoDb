@@ -1,0 +1,305 @@
+
+Ans2
+
+use universities
+db.universities.insertMany([
+{
+  country : "Spain",
+  city : "Salamanca",
+  name : "USAL",
+  location : {
+    type : "Point",
+    coordinates : [ -5.6722512,17, 40.9607792 ]
+  },
+  students : [
+    { year : 2014, number : 24774 },
+    { year : 2015, number : 23166 },
+    { year : 2016, number : 21913 },
+    { year : 2017, number : 21715 }
+  ]
+},
+{
+  country : "Spain",
+  city : "Salamanca",
+  name : "UPSA",
+  location : {
+    type : "Point",
+    coordinates : [ -5.6691191,17, 40.9631732 ]
+  },
+  students : [
+    { year : 2014, number : 4788 },
+    { year : 2015, number : 4821 },
+    { year : 2016, number : 6550 },
+    { year : 2017, number : 6125 }
+  ]
+}
+])
+
+use courses
+db.courses.insertMany([
+{
+  university : "USAL",
+  name : "Computer Science",
+  level : "Excellent"
+},
+{
+  university : "USAL",
+  name : "Electronics",
+  level : "Intermediate"
+},
+{
+  university : "USAL",
+  name : "Communication",
+  level : "Excellent"
+}
+])
+
+
+
+db.universities.find({country : "Spain"},{city : "Salamanca"})
+
+db.universities.find({},{country:1,city:1,name:1})
+
+db.universities.count()
+
+db.universities.find().sort({number:-1});
+
+db.universities.find().limit(2).pretty();
+
+
+
+
+Ans 3
+use empl
+db.createCollection("empl")
+
+db.empl.insertMany([
+ {no:1,name:"ST",salary:2000,role:"OB"},
+ {no:2,name:"MSD",salary:1500,role:"WK"},
+ {no:3,name:"YS",salary:1000,role:"ALR"},
+ {no:4,name:"RD",salary:1000,role:"MOB"},
+ {no:5,name:"RS",salary:500,role:"OB"},
+ {no:6,name:"BK",salary:500,role:"MOB"},
+ {no:7,name:"VK",salary:300,role:"BW"},
+ {no:8,name:"JB",salary:400,role:"BW"},
+ {no:9,name:"HP",salary:400,role:"ALR"},
+ {no:10,name:"VS",salary:300,role:"OB"}
+])
+
+db.empl.find().pretty();
+
+db.empl.updateMany({name:"ST"},{$inc:{salary:8000}});
+
+db.empl.updateMany({},{$inc:{salary:4000}});
+
+db.empl.updateMany({"name":"ST"},{$set:{"role":"C and WK"}});
+
+db.empl.updateMany({"name":"RS"},{$set:{"remark":"WC"}});
+
+db.empl.update({no:11},{$set:{no:11,name:"AK",salary:10000,role:"coch"}},{upsert:true});
+
+db.empl.update({name:"RD"},{$unset:{remark:"WC"}});
+
+db.empl.update({name:"RD"},{$mul:{salary:2}});
+
+db.empl.find({name:/^S/});
+
+db.empl.find({name:/^R/});
+
+db.empl.find({name:/K$/});
+
+db.empl.find({name:/D$/});
+
+db.empl.find({name:/S/});
+
+db.empl.find({name:{$regex:"^S"}});
+
+db.empl.find({name:{$regex:"S",$options:"i"}});
+
+db.empl.find({role:{$in:["OB","MOB"]}});
+
+db.empl.find({role:{$nin:["OB","MOB"]}});
+
+
+
+Ans 4
+
+db.Student.insert({name: 'Mary'})
+db.Student.insert({_id: 2,name: 'Madeline'})
+db.Student.insert({name: 'Steve',scores:
+{
+  midterm: 80,
+  final: 100
+}})
+db.Student.find( { name: 'Steve' } )
+db.Student.find({"scores.midterm": {"$gt": 75}})
+
+db.Student.find({$and:[
+{
+"scores.midterm": {"$gt": 75}
+},
+{
+"scores.final": {"$gt": 80}
+}
+]}).pretty();
+
+db.Student.find({$or:[
+{
+"scores.midterm": {"$gt": 75}
+},
+{
+"scores.final": {"$gt": 80}
+}
+]}).pretty();
+
+db.Student.find({$and:[
+{
+"scores.midterm": {"$in": [50,80]}
+},
+{
+"scores.final": {"$in": [80,100]}
+}
+]}).pretty();
+
+db.Student.updateMany(
+{ "name" : "Rama"},
+{ $set:{"name" : "Ram Raj"}},
+{upsert : true}
+ )
+
+
+db.Student.updateMany(
+{ "name" : "Raju"},
+{ $set:{"scores.midterm" : 50,"scores.final" : 100}},
+{upsert : true}
+ )
+
+
+db.Student.updateMany(
+{},
+{ $set:{"grades" : 90}},
+{upsert : true}
+ )
+
+db.Student.deleteMany({})
+db.Student.deleteOne( { "name" : "Raju"})
+db.Student.deleteMany({"scores.midterm": {"$lt": 80}})
+
+
+Ans 1
+
+use restaurants
+
+db.restaurants.insertMany([
+{
+  "address": {
+     "building": "1007",
+     "street": "HighStreet",
+     "zipcode": "TW31HA",
+     "coordinate":[ -70,40]
+  },
+  "borough": "Hounslow",
+  "cuisine": "Bakery",
+  "Orders": [
+     { "date": { "$date": 1393804800000 }, "rating": "A", "stars": 2 },
+     { "date": { "$date": 1378857600000 }, "rating": "A", "stars": 6 },
+     { "date": { "$date": 1358985600000 }, "rating": "A", "stars": 10 },
+     { "date": { "$date": 1322006400000 }, "rating": "C", "stars": 9 },
+     { "date": { "$date": 1299715200000 }, "rating": "B", "stars": 14 }
+  ],
+  "name": "Just Bake Shop",
+  "restaurant_id": "5075445"
+}
+{
+  "address": {
+     "building": "2345",
+     "street": "LowStreet",
+     "zipcode": "pb1103"
+     "coordinate":[ -75,30]
+  },
+  "borough": "yummy",
+  "cuisine": "Indian",
+  "Orders": [
+     { "date": { "$date": 1393804800000 }, "rating": "A", "stars": 3 },
+     { "date": { "$date": 1378857600000 }, "rating": "B", "stars": 7 },
+     { "date": { "$date": 1358985600000 }, "rating": "A", "stars": 8 },
+     { "date": { "$date": 1322006400000 }, "rating": "A", "stars": 9 },
+     { "date": { "$date": 1299715200000 }, "rating": "A", "stars": 14 }
+  ],
+  "name": "Baba Chicken",
+  "restaurant_id": "147001"
+}{
+  "address": {
+     "building": "19",
+     "street": "Burgerking",
+     "zipcode": "147003"
+     "coordinate":[ -10,20]
+  },
+  "borough": "PLW",
+  "cuisine": "Subway",
+  "Orders": [
+     { "date": { "$date": 1393804800000 }, "rating": "A", "stars": 4 },
+     { "date": { "$date": 1378857600000 }, "rating": "B", "stars": 7 },
+     { "date": { "$date": 1358985600000 }, "rating": "A", "stars": 8 },
+     { "date": { "$date": 1322006400000 }, "rating": "C", "stars": 2 },
+     { "date": { "$date": 1299715200000 }, "rating": "B", "stars": 4 }
+  ],
+  "name": "Red Dragon",
+  "restaurant_id": "147005"
+}
+
+
+db.restaurants.find()
+
+db.restaurants.find({},{restaurant_id:1, name:1, borough:1,cuisine:1})
+
+db.restaurants.find({},{restaurant_id:1, name:1, borough:1, cuisine:1, _id:0})
+
+db.restaurants.find({},{restaurant_id:1, name:1, borough:1, zipcode:1, _id:0})
+
+db.restaurants.find({"borough":"Hounslow"})
+
+db.restaurants.find({"borough": "Croydon"}).limit(5)
+
+db.restaurants.find({"borough": "Hounslow"}).skip(5).limit(5);
+
+db.restaurants.find({rating : { $elemMatch:{"stars":{$gt : 90}}}});
+
+db.restaurants.find({rating : { $elemMatch:{"stars":{$gt : 80 , $lt :100}}}});
+
+db.restaurants.find({"address.coordinate" : {$lt : -95.754168}});
+
+db.restaurants.find({"cuisine" : {$ne : "American "},"rating.stars":{$gt: 70},"address.coordinate" : {$lt : -65.754168}});
+
+db.restaurants.find({"cuisine" : {$ne : "American "},"rating.stars" :"A","borough": {$ne : "Brooklyn"}}).sort({"cuisine":-1});
+
+db.restaurants.find({name: /^Wil/},{"restaurant_id":1,"name":1,"borough":1,"cuisine" :1});
+
+db.restaurants.find({name: /ces$/},{"restaurant_id":1,"name":1,"borough":1,"cuisine" :1});
+
+db.restaurants.find({name: /.Reg./},{"restaurant_id":1,"name":1,"borough":1,"cuisine" :1});
+
+db.restaurants.find({ "borough": "Hounslow" , $or : [{ "cuisine" : "American " },{ "cuisine" : "Chinese" }]});
+
+db.restaurants.find({"borough" :{$in :["Windsor" , "Harrow" , "WestMinister"]}},{"restaurant_id":1,"name":1,"borough":1,"cuisine" :1});
+
+db.restaurants.find({"borough" :{$nin :["borough" , "Harrow","Hounslow","Ealing"]}},{"restaurant_id" : 1,"name":1,"borough":1,"cuisine" :1});
+
+db.restaurants.find({"rating.stars" : { $not: {$gt : 10}}}
+
+db.restaurants.find({$or:[{name: /^Wil/},{"$and":[{"cuisine":{$ne:"American"}},{"cuisine":{$ne:"Chinees"}}]}]}
+
+db.restaurants.find( {"rating.date": ISODate("2014-08-11T00:00:00Z"),"rating.rating":"A","rating.stars" : 11},{"restaurant_id" : 1,"name":1,"rating":1});
+
+db.restaurants.find( {"rating.1.date": ISODate("2014-08-11T00:00:00Z"),"rating.1.rating":"A","rating.1.star" : 9},{"restaurant_id" : 1,"name":1,"rating":1});
+
+db.restaurants.find().sort({"name":1});
+
+db.restaurants.find().sort({"name":-1});
+
+db.restaurants.find().sort({"cuisine":1,"borough" : -1,});
+
+db.restaurants.find({"address.street":{ $exists : true }});
+
+
+
